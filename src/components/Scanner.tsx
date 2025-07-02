@@ -9,8 +9,12 @@ export function Scanner({ onDetected }: { onDetected: (code: string) => void }) 
     Quagga.init({
       inputStream: { type: 'LiveStream', target: ref.current },
       decoder: { readers: ['ean_reader'] }
-    }, err => { if (!err) Quagga.start(); });
-    Quagga.onDetected(data => onDetected(data.codeResult.code));
+    }, (err?: Error) => {
+      if (!err) Quagga.start();
+    });
+    Quagga.onDetected((data: { codeResult: { code: string } }) => {
+      onDetected(data.codeResult.code);
+    });
     return () => { Quagga.stop(); Quagga.offDetected(); };
   }, [onDetected]);
 
