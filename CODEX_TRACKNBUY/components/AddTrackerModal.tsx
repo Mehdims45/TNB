@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Modal from './Modal';
 import { useAuth } from '../context/AuthContext';
 
@@ -10,6 +11,7 @@ interface Props {
 
 export default function AddTrackerModal({ open, onClose, onSaved }: Props) {
   const { supabase, user } = useAuth();
+  const router = useRouter();
   const [asinOrUrl, setAsinOrUrl] = useState('');
   const [threshold, setThreshold] = useState('');
   const [costPrice, setCostPrice] = useState('');
@@ -37,6 +39,7 @@ export default function AddTrackerModal({ open, onClose, onSaved }: Props) {
     if (!error && data) {
       onSaved(data.id);
       onClose();
+      router.push(`/trackers/${data.id}`);
     }
   };
 
