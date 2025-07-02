@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+
 import Modal from './Modal';
 import { useAuth } from '../context/AuthContext';
 
@@ -9,9 +9,7 @@ interface Props {
   onSaved(id: string): void;
 }
 
-export default function AddTrackerModal({ open, onClose, onSaved }: Props) {
-  const { supabase, user } = useAuth();
-  const router = useRouter();
+
   const [asinOrUrl, setAsinOrUrl] = useState('');
   const [threshold, setThreshold] = useState('');
   const [costPrice, setCostPrice] = useState('');
@@ -25,12 +23,7 @@ export default function AddTrackerModal({ open, onClose, onSaved }: Props) {
 
   const save = async () => {
     const { data, error } = await supabase.from('trackers').insert({
-      user_id: user?.id,
-      marketplace: 'Amazon',
-      asin: preview.asin,
-      product_url: preview.url,
-      title: preview.title,
-      image_url: preview.image,
+
       threshold_price: Number(threshold) || null,
       cost_price: Number(costPrice) || null,
       last_checked_price: preview.price,
@@ -39,7 +32,7 @@ export default function AddTrackerModal({ open, onClose, onSaved }: Props) {
     if (!error && data) {
       onSaved(data.id);
       onClose();
-      router.push(`/trackers/${data.id}`);
+
     }
   };
 

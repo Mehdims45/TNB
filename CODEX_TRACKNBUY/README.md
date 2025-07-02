@@ -18,7 +18,6 @@ npm install
 npm run dev
 ```
 
-Then open `http://localhost:3000/signup` to create your first account.
 
 ## Deployment
 
