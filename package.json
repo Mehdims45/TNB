@@ -1,0 +1,23 @@
+{
+  "name": "tracknbuy",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "scrape": "ts-node scripts/scrape.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.x",
+    "axios": "^1.x",
+    "next": "^13.x",
+    "quagga": "^0.12.x",
+    "react": "^18.x",
+    "react-dom": "^18.x"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/react": "19.1.8",
+    "typescript": "^5.x"
+  }
+}
