@@ -3,6 +3,7 @@ create table users (
   id uuid primary key default gen_random_uuid(),
   email text unique not null,
   password text not null,
+
   status text not null default 'free',
   valid_until timestamptz,
   created_at timestamptz default now(),
@@ -16,6 +17,7 @@ create table trackers (
   marketplace text not null,
   asin text not null,
   product_url text not null,
+
   threshold_price numeric,
   cost_price numeric,
   last_checked_price numeric,

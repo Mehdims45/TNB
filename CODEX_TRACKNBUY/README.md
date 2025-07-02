@@ -18,6 +18,7 @@ npm install
 npm run dev
 ```
 
+
 ## Deployment
 
 Deploy on Vercel and connect to your Supabase project. Set environment variables from `.env.local` in Vercel. The app works well inside an iOS WebView when deployed as a PWA.

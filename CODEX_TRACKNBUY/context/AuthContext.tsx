@@ -1,10 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { createClient, SupabaseClient, Session } from '@supabase/supabase-js';
+
 import bcrypt from 'bcryptjs';
 
 interface User {
   id: string;
   email: string;
+
   status: string;
   valid_until: string | null;
 }
@@ -28,38 +29,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const session = supabase.auth.getSession();
-    session.then(({ data }) => setUser(data.session?.user as User));
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user as User);
-    });
-    return () => {
-      listener.subscription.unsubscribe();
-    };
+
   }, [supabase]);
 
   const signUp = async (email: string, password: string) => {
     const hashed = await bcrypt.hash(password, 10);
-    await supabase.from('users').insert({ email, password: hashed });
-    await signIn(email, password);
+
   };
 
   const signIn = async (email: string, password: string) => {
     const { data } = await supabase.from('users').select('*').eq('email', email).single();
     if (data && await bcrypt.compare(password, data.password)) {
-      await supabase.auth.signInWithPassword({ email, password });
+
     } else {
       throw new Error('Invalid credentials');
     }
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
-  };
 
-  const forgotPassword = async (email: string) => {
-    await supabase.auth.resetPasswordForEmail(email);
   };
 
   return (
